@@ -10,12 +10,16 @@ class Barang extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama_barang',
-        'id_negara_asal',
-        'is_completed',
-        'jumlah_barang',
-        'harga_barang',
-    ];
+    'kode_barang',
+    'nama_barang',
+    'id_negara_asal',
+    'jumlah_barang',
+    'harga_barang',
+    'is_completed',
+    'user_id',
+];
+
+
 
     // Relasi dengan model NegaraAsal
     public function negaraAsal()

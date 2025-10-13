@@ -11241,3 +11241,71 @@ body {
   font-size: 0.75rem;
   border-radius: 0.375rem !important;
 }
+
+/* === CUSTOM WARNA UNTUK ADMIN DASHBOARD === */
+.navbar,
+.sb-topnav,
+#layoutSidenav_nav,
+.sb-sidenav {
+    background: linear-gradient(90deg, #773b3bff, #f0b2b2ff) !important;
+    color: #fff !important;
+}
+
+.sb-sidenav .nav-link.active,
+.sb-sidenav .nav-link:hover {
+    background-color: #b17d7d !important;
+}
+
+.sb-sidenav .nav-link,
+.navbar-brand {
+    color: #ffffff !important;
+}
+
+/* === Warna bagian bawah sidebar (footer) === */
+.sb-sidenav-footer {
+    background: linear-gradient(90deg, #4e3535ff, #4e3535ff) !important;
+    color: #fff !important;
+}
+
+/* === Custom Warna Beacukai Manager === */
+
+/* Warna latar belakang tabel */
+.table {
+    background-color: #e6baba !important; /* warna lembut pastel */
+}
+
+/* Header tabel */
+.table thead {
+    background-color: #e07f7f !important; /* warna utama kamu */
+    color: #fff !important; /* teks putih biar kontras */
+}
+
+/* Garis border tabel */
+.table, 
+.table td, 
+.table th {
+    border-color: #d29b9b !important;
+}
+
+/* Baris genap biar sedikit beda */
+.table tbody tr:nth-child(even) {
+    background-color: #f1d4d4 !important;
+}
+
+/* Hover efek lembut */
+.table tbody tr:hover {
+    background-color: #ebbcbc !important;
+}
+
+/* Tombol “Tambah Barang Baru” */
+.btn-primary {
+    background-color: #000 !important;   /* hitam solid */
+    border-color: #000 !important;
+    color: #fff !important;
+}
+
+/* Hover tombol tambah biar keren */
+.btn-primary:hover {
+    background-color: #333 !important;   /* sedikit lebih terang waktu hover */
+    border-color: #333 !important;
+}

@@ -16,14 +16,16 @@
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered table-hover" id="datatablesSimple">
-                <thead class="thead-light">
-                    <tr class="text-center">
+                <thead class="thead-light text-center">
+                    <tr>
                         <th>#</th>
+                        <th>Kode Barang</th>
                         <th>Nama Barang</th>
                         <th>Negara Asal</th>
                         <th>Status</th>
                         <th>Jumlah Barang</th>
                         <th>Harga Barang</th>
+                        <th>Penginput</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -32,6 +34,7 @@
                     @forelse($barangs as $barang)
                         <tr class="align-middle text-center">
                             <td>{{ $loop->iteration }}</td>
+                            <td>{{ $barang->kode_barang ?? '-' }}</td>
                             <td>{{ $barang->nama_barang }}</td>
                             <td>{{ $barang->negaraAsal->nama_negara ?? '-' }}</td>
                             <td>
@@ -48,6 +51,9 @@
                                 @endphp
                                 {{ $simbol }} {{ number_format($barang->harga_barang, 0, ',', '.') }}
                             </td>
+
+                            {{-- 🙋 Nama user yang menginput barang --}}
+                            <td>{{ $barang->user->name ?? 'Tidak diketahui' }}</td>
 
                             {{-- 🔧 Tombol Aksi --}}
                             <td>
@@ -82,7 +88,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="text-center text-muted">Tidak ada barang yang terdaftar.</td>
+                            <td colspan="9" class="text-center text-muted">Tidak ada barang yang terdaftar.</td>
                         </tr>
                     @endforelse
                 </tbody>
