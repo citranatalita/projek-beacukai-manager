@@ -24,8 +24,9 @@
                         <th>Negara Asal</th>
                         <th>Status</th>
                         <th>Jumlah Barang</th>
-                        <th>Harga Barang</th>
+                        <th>Nilai Cukai</th>
                         <th>Penginput</th>
+                        <th>Tanggal Ditambahkan</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -37,25 +38,30 @@
                             <td>{{ $barang->kode_barang ?? '-' }}</td>
                             <td>{{ $barang->nama_barang }}</td>
                             <td>{{ $barang->negaraAsal->nama_negara ?? '-' }}</td>
+
                             <td>
                                 <span class="badge {{ $barang->is_completed ? 'bg-success' : 'bg-warning text-dark' }}">
                                     {{ $barang->is_completed ? 'Completed' : 'Pending' }}
                                 </span>
                             </td>
+
                             <td>{{ $barang->jumlah_barang }}</td>
 
-                            {{-- 💰 Tampilkan harga sesuai mata uang negara --}}
+                            {{-- Nilai cukai sesuai simbol negara --}}
                             <td>
                                 @php
                                     $simbol = $barang->negaraAsal->simbol ?? 'Rp';
                                 @endphp
-                                {{ $simbol }} {{ number_format($barang->harga_barang, 0, ',', '.') }}
+                                {{ $simbol }} {{ number_format($barang->nilai_cukai, 0, ',', '.') }}
                             </td>
 
-                            {{-- 🙋 Nama user yang menginput barang --}}
-                            <td>{{ $barang->user->name ?? 'Tidak diketahui' }}</td>
+                            {{-- Bagian penginput otomatis tampil nama user --}}
+                            <td>
+                                {{ $barang->user ? $barang->user->name : 'Tidak diketahui' }}
+                            </td>
 
-                            {{-- 🔧 Tombol Aksi --}}
+                            <td>{{ $barang->created_at->timezone('Asia/Jakarta')->format('d-m-Y H:i') }}</td>
+
                             <td>
                                 <a href="{{ route('barang.edit', $barang->id) }}" class="btn btn-warning btn-sm mb-1">
                                     <i class="fas fa-edit"></i> Edit
@@ -65,14 +71,14 @@
                                     <form action="{{ route('barang.markAsPending', $barang->id) }}" method="POST" style="display:inline;">
                                         @csrf
                                         <button type="submit" class="btn btn-secondary btn-sm mb-1">
-                                            <i class="fas fa-clock"></i> Pending
+                                            ⏱ Pending
                                         </button>
                                     </form>
                                 @else
                                     <form action="{{ route('barang.markAsCompleted', $barang->id) }}" method="POST" style="display:inline;">
                                         @csrf
                                         <button type="submit" class="btn btn-success btn-sm mb-1">
-                                            <i class="fas fa-check"></i> Completed
+                                            ☑ Completed
                                         </button>
                                     </form>
                                 @endif
@@ -88,7 +94,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="9" class="text-center text-muted">Tidak ada barang yang terdaftar.</td>
+                            <td colspan="10" class="text-center text-muted">Tidak ada barang yang terdaftar.</td>
                         </tr>
                     @endforelse
                 </tbody>

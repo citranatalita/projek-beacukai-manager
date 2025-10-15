@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Playfair Display', sans-serif;
-            background-color: #f3d4d4ff;
+            background-color: #D2A6A0;
             margin: 0;
             padding: 0;
             display: flex;
@@ -88,7 +88,7 @@
         
         <!-- Teks -->
         <h1>Hy, Welcome!</h1>
-        <p>Welcome to the Beacukai Manager Dashboard</p>
+        <p>Welcome to the Beacukai Manager </p>
         
         <!-- Button -->
        <a href="{{ route('admin.login') }}" class="button">Get Started</a>

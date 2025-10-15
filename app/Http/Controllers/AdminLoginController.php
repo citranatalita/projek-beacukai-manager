@@ -47,4 +47,17 @@ class AdminLoginController extends Controller
 
         return redirect()->route('admin.login')->with('success', 'Berhasil logout.');
     }
+
+    public function updateStatus(Request $request, $id)
+{
+    $barang = \App\Models\Barang::findOrFail($id);
+    $request->validate([
+        'status' => 'required|in:pending,completed',
+    ]);
+    $barang->status = $request->status;
+    $barang->save();
+
+    return redirect()->back()->with('success', 'Status berhasil diubah');
+}
+
 }

@@ -11247,7 +11247,7 @@ body {
 .sb-topnav,
 #layoutSidenav_nav,
 .sb-sidenav {
-    background: linear-gradient(90deg, #773b3bff, #f0b2b2ff) !important;
+    background: linear-gradient(90deg, #D2A6A0, #B88B7D) !important;
     color: #fff !important;
 }
 
@@ -11263,7 +11263,7 @@ body {
 
 /* === Warna bagian bawah sidebar (footer) === */
 .sb-sidenav-footer {
-    background: linear-gradient(90deg, #4e3535ff, #4e3535ff) !important;
+    background: linear-gradient(90deg, #D2A6A0, #B88B7D) !important;
     color: #fff !important;
 }
 

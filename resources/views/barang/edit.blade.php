@@ -53,13 +53,17 @@
                 <input type="number" class="form-control" id="jumlah_barang" name="jumlah_barang" value="{{ old('jumlah_barang', $barang->jumlah_barang) }}" required>
             </div>
 
-            {{-- Harga Barang (otomatis ubah simbol) --}}
-            @php
-                $simbolAwal = $barang->negaraAsal->simbol ?? 'Rp';
-            @endphp
+            {{-- Nilai Cukai --}}
             <div class="mb-3">
-                <label for="harga_barang" class="form-label" id="label_harga_barang">Harga Barang ({{ $simbolAwal }})</label>
-                <input type="number" class="form-control" id="harga_barang" name="harga_barang" value="{{ old('harga_barang', $barang->harga_barang) }}" required>
+                <label for="nilai_cukai" class="form-label" id="label_nilai_cukai">Nilai Cukai (Rp)</label>
+                <input 
+                    type="number" 
+                    class="form-control" 
+                    id="nilai_cukai" 
+                    name="nilai_cukai" 
+                    value="{{ old('nilai_cukai', $barang->nilai_cukai) }}" 
+                    required
+                >
             </div>
 
             <button type="submit" class="btn btn-primary">Update</button>
@@ -72,12 +76,11 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const selectNegara = document.getElementById('id_negara_asal');
-    const labelHarga = document.getElementById('label_harga_barang');
+    const labelCukai = document.getElementById('label_nilai_cukai');
 
-    // Ubah simbol langsung saat dropdown berubah
     selectNegara.addEventListener('change', function() {
         const simbol = this.options[this.selectedIndex].getAttribute('data-simbol') || 'Rp';
-        labelHarga.textContent = `Harga Barang (${simbol})`;
+        labelCukai.textContent = `Nilai Cukai (${simbol})`;
     });
 });
 </script>

@@ -10,20 +10,25 @@ class Barang extends Model
     use HasFactory;
 
     protected $fillable = [
-    'kode_barang',
-    'nama_barang',
-    'id_negara_asal',
-    'jumlah_barang',
-    'harga_barang',
-    'is_completed',
-    'user_id',
-];
-
-
+        'kode_barang',
+        'nama_barang',
+        'id_negara_asal',
+        'jumlah_barang',
+        'nilai_cukai',
+        'is_completed',
+        'user_id',
+        'status',
+    ];
 
     // Relasi dengan model NegaraAsal
     public function negaraAsal()
     {
         return $this->belongsTo(NegaraAsal::class, 'id_negara_asal');
+    }
+
+    // Relasi dengan User (penginput)
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'user_id');
     }
 }

@@ -8,15 +8,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('customer')->after('is_admin');
+        Schema::table('barangs', function (Blueprint $table) {
+            $table->string('status')->default('pending')->after('kode_barang');
         });
     }
 
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role');
+        Schema::table('barangs', function (Blueprint $table) {
+            $table->dropColumn('status');
         });
     }
 };

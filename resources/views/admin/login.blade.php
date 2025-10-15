@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Playfair Display', sans-serif;
-            background-color: #eebdbdff;
+            background-color: #D2A6A0;
             margin: 0;
             padding: 0;
             display: flex;
