@@ -64,9 +64,22 @@ Route::prefix('customer')->group(function () {
     // ==========================
     // Dashboard & Barang Customer
     // ==========================
-    Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth:customer'])->group(function () {
+        // Dashboard
         Route::get('/dashboard', [CustomerController::class, 'dashboard'])->name('customer.dashboard');
-        Route::post('/barang', [CustomerController::class, 'store'])->name('customer.barang.store');
+
+        // Form tambah barang
+        Route::get('/barang_customer/create', [CustomerController::class, 'create'])
+        ->name('customer.barang_customer.create');
+
+
+        // Simpan barang
+        Route::post('/barang_customer', [CustomerController::class, 'store'])
+        ->name('customer.barang_customer.store');
+        // Logout
         Route::post('/logout', [CustomerController::class, 'logout'])->name('customer.logout');
     });
 });
+
+
+

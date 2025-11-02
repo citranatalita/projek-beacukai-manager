@@ -76,6 +76,7 @@ class BarangController extends Controller
             'id_negara_asal' => $request->id_negara_asal,
             'jumlah_barang' => $request->jumlah_barang,
             'nilai_cukai' => $request->nilai_cukai,
+            'status' => $barang->status ?? 'Pending',
         ]);
 
         return redirect()->route('barang.index')->with('success', 'Barang berhasil diperbarui.');
@@ -94,7 +95,7 @@ class BarangController extends Controller
 {
     $barang = Barang::findOrFail($id);
     $barang->is_completed = true;
-    $barang->status = 'completed'; // tambahan penting
+    $barang->status = 'Completed'; // tambahan penting
     $barang->save();
 
     return redirect()->back()->with('success', 'Barang berhasil ditandai sebagai Completed');
@@ -104,7 +105,7 @@ public function markAsPending($id)
 {
     $barang = Barang::findOrFail($id);
     $barang->is_completed = false;
-    $barang->status = 'pending'; // tambahan penting
+    $barang->status = 'Pending'; // tambahan penting
     $barang->save();
 
     return redirect()->back()->with('success', 'Barang berhasil ditandai sebagai Pending');

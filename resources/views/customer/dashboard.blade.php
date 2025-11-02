@@ -1,130 +1,90 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Customer</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    @extends('layouts.customer')
 
-    <style>
-        body {
-            background-color: #ceb595ff;
-        }
-        nav.navbar {
-            background-color: #c4a885ff;
-        }
-        nav.navbar .navbar-brand, nav.navbar .nav-link {
-            color: #fff !important;
-        }
-    </style>
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">Dashboard Customer</a>
-            <div class="ms-auto">
-                <form action="{{ route('customer.logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="btn btn-light btn-sm">Logout</button>
-                </form>
-            </div>
+    @section('content')
+    <div class="container-fluid px-4">
+        <h3 class="fw-bold mt-3 mb-4 text-center">📦 Daftar Barang Saya</h3>
+
+        <div class="text-end mb-3">
+            <a href="{{ route('customer.barang_customer.create') }}" class="btn btn-primary">
+                + Tambah Barang
+            </a>
         </div>
-    </nav>
 
-    <!-- Konten Utama -->
-    <div class="container mt-5">
-        <h3 class="mb-4 text-center">Tambah Barang Anda</h3>
+        <div class="card shadow border-0 rounded-3">
+            <div class="card-body table-responsive">
+                {{-- ✅ Pastikan variabel $barangs dikirim dari controller --}}
+                @if(isset($barangs) && $barangs->count() > 0)
+                    <table class="table table-hover align-middle text-center">
+                        <thead class="table-light">
+                            <tr>
+                                <th>No</th>
+                                <th>Kode Barang</th>
+                                <th>Nama Barang</th>
+                                <th>Negara Asal</th>
+                                <th>Jumlah</th>
+                                <th>Nilai Cukai</th>
+                                <th>Status</th>
+                                <th>Tanggal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($barangs as $index => $barang)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td><strong>{{ $barang->kode_barang }}</strong></td>
+                                    <td>{{ ucfirst($barang->nama_barang) }}</td>
+                                    <td>{{ $barang->negaraAsal->nama_negara ?? '-' }}</td>
+                                    <td>{{ $barang->jumlah_barang }}</td>
 
-        <!-- Pesan Error -->
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+                                    {{-- ✅ Nilai Cukai --}}
+                                    <td>
+                                        @if(empty($barang->nilai_cukai) || $barang->nilai_cukai == 0)
+                                            <span class="badge bg-secondary">Unknown</span>
+                                        @else
+                                            Rp {{ number_format($barang->nilai_cukai, 0, ',', '.') }}
+                                        @endif
+                                    </td>
 
-        <!-- Form Tambah Barang -->
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <form action="{{ route('customer.barang.store') }}" method="POST">
-                    @csrf
+                                    {{-- ✅ Status --}}
+                                    <td>
+                                        @switch($barang->status)
+                                            @case('Pending')
+                                                <span class="badge bg-warning text-dark">Pending</span>
+                                                @break
+                                            @case('Approved')
+                                            @case('Completed')
+                                                <span class="badge bg-success">{{ $barang->status }}</span>
+                                                @break
+                                            @case('Rejected')
+                                                <span class="badge bg-danger">Rejected</span>
+                                                @break
+                                            @default
+                                                <span class="badge bg-secondary">Pending</span>
+                                        @endswitch
+                                    </td>
 
-                    {{-- Nama Barang --}}
-                    <div class="mb-3">
-                        <label for="nama_barang" class="form-label">Nama Barang</label>
-                        <input type="text" name="nama_barang" id="nama_barang" class="form-control" value="{{ old('nama_barang') }}" required>
-                    </div>
-
-                    {{-- Negara Asal --}}
-                    <div class="mb-3">
-                        <label for="id_negara_asal" class="form-label">Negara Asal</label>
-                        <select name="id_negara_asal" id="id_negara_asal" class="form-select" required>
-                            <option value="" disabled selected>Pilih Negara</option>
-                            @foreach ($negaraAsal as $negara)
-                                <option value="{{ $negara->id }}">{{ $negara->nama_negara }}</option>
+                                    <td>{{ $barang->created_at->format('d-m-Y H:i') }}</td>
+                                </tr>
                             @endforeach
-                        </select>
+                        </tbody>
+                    </table>
+                @else
+                    <div class="text-center text-muted py-4">
+                        Belum ada barang yang kamu input.
                     </div>
-
-                    {{-- Jumlah Barang --}}
-                    <div class="mb-3">
-                        <label for="jumlah_barang" class="form-label">Jumlah Barang</label>
-                        <input type="number" name="jumlah_barang" id="jumlah_barang" class="form-control" value="{{ old('jumlah_barang') }}" required>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Simpan Barang</button>
-                </form>
+                @endif
             </div>
-        </div>
-
-        <!-- Daftar Barang Customer -->
-        <div class="mt-5">
-            <h4 class="mb-3">Barang Anda</h4>
-            <table class="table table-bordered table-striped text-center">
-                <thead class="table-dark">
-                    <tr>
-                        <th>No</th>
-                        <th>Nama Barang</th>
-                        <th>Negara Asal</th>
-                        <th>Jumlah</th>
-                        <th>Nilai Cukai</th>
-                        <th>Status</th>
-                        <th>Tanggal Ditambahkan</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($barangCustomer as $barang)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $barang->nama_barang }}</td>
-                            <td>{{ $barang->negaraAsal->nama_negara ?? '-' }}</td>
-                            <td>{{ $barang->jumlah_barang }}</td>
-                            <td>
-                                @if($barang->nilai_cukai == 0)
-                                    <span class="text-muted">Belum ditentukan</span>
-                                @else
-                                    @php
-                                        $simbol = $barang->negaraAsal->simbol ?? 'Rp';
-                                    @endphp
-                                    {{ $simbol }} {{ number_format($barang->nilai_cukai, 0, ',', '.') }}
-                                @endif
-                            </td>
-                            <td>
-                                <span class="badge {{ $barang->is_completed ? 'bg-success' : 'bg-warning text-dark' }}">
-                                    {{ $barang->is_completed ? 'Completed' : 'Pending' }}
-                                </span>
-                            </td>
-                            <td>{{ $barang->created_at->timezone('Asia/Jakarta')->format('d-m-Y H:i') }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-
-            </table>
         </div>
     </div>
-</body>
-</html>
+
+    {{-- ✅ Responsif dan rapi --}}
+    <style>
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        th, td {
+            white-space: nowrap;
+        }
+    </style>
+    @endsection
