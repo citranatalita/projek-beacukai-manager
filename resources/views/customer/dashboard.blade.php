@@ -12,7 +12,6 @@
 
         <div class="card shadow border-0 rounded-3">
             <div class="card-body table-responsive">
-                {{-- ✅ Pastikan variabel $barangs dikirim dari controller --}}
                 @if(isset($barangs) && $barangs->count() > 0)
                     <table class="table table-hover align-middle text-center">
                         <thead class="table-light">
@@ -36,7 +35,7 @@
                                     <td>{{ $barang->negaraAsal->nama_negara ?? '-' }}</td>
                                     <td>{{ $barang->jumlah_barang }}</td>
 
-                                    {{-- ✅ Nilai Cukai --}}
+                                    -- nilai cukai --
                                     <td>
                                         @if(empty($barang->nilai_cukai) || $barang->nilai_cukai == 0)
                                             <span class="badge bg-secondary">Unknown</span>
@@ -45,7 +44,7 @@
                                         @endif
                                     </td>
 
-                                    {{-- ✅ Status --}}
+                                    -- Status --
                                     <td>
                                         @switch($barang->status)
                                             @case('Pending')
@@ -77,7 +76,7 @@
         </div>
     </div>
 
-    {{-- ✅ Responsif dan rapi --}}
+
     <style>
         .table-responsive {
             overflow-x: auto;

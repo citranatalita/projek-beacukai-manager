@@ -18,7 +18,7 @@
             <table class="table table-bordered table-hover" id="datatablesSimple">
                 <thead class="thead-light text-center">
                     <tr>
-                        <th>#</th>
+                        <th>No</th>
                         <th>Kode Barang</th>
                         <th>Nama Barang</th>
                         <th>Negara Asal</th>
@@ -83,13 +83,18 @@
                                     </form>
                                 @endif
 
-                                <form action="{{ route('barang.destroy', $barang->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus barang ini?');">
+                                <form action="{{ route('barang.destroy', $barang->id) }}" 
+                                    method="POST" 
+                                    style="display:inline;" 
+                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus barang ini?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm">
                                         <i class="fas fa-trash"></i> Hapus
                                     </button>
                                 </form>
+
+
                             </td>
                         </tr>
                     @empty
