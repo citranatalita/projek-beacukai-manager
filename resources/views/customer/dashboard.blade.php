@@ -35,7 +35,7 @@
                                     <td>{{ $barang->negaraAsal->nama_negara ?? '-' }}</td>
                                     <td>{{ $barang->jumlah_barang }}</td>
 
-                                    -- nilai cukai --
+                                    {{-- nilai cukai --}}
                                     <td>
                                         @if(empty($barang->nilai_cukai) || $barang->nilai_cukai == 0)
                                             <span class="badge bg-secondary">Unknown</span>
@@ -44,7 +44,7 @@
                                         @endif
                                     </td>
 
-                                    -- Status --
+                                    {{-- Status --}}
                                     <td>
                                         @switch($barang->status)
                                             @case('Pending')
