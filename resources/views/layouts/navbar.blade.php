@@ -1,41 +1,45 @@
-<nav class="sb-topnav navbar navbar-expand navbar-dark" style="background-color: #413b3bff;">
-    <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="{{ route('barang.index') }}">DASHBOARD ADMIN</a>
+<nav class="sb-topnav navbar navbar-expand navbar-dark shadow-sm" style="background-color: #2c2c2c;">
+    <!-- Logo / Brand -->
+    <a class="navbar-brand ps-3 fw-bold" href="{{ route('barang.index') }}">
+        <i class="fas fa-cog me-2"></i> Admin
+    </a>
 
-    <!-- Sidebar Toggle-->
-    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#">
-        <i class="fas fa-bars"></i>
+    <!-- Sidebar Toggle -->
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 ms-2" id="sidebarToggle">
+        <i class="fas fa-bars fs-5"></i>
     </button>
 
-    <!-- Navbar Search-->
-    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-        <div class="input-group">
-            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-            <button class="btn btn-primary" id="btnNavbarSearch" type="button">
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
-    </form>
-
-    <!-- Navbar User Menu-->
-    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+    <!-- User Dropdown -->
+    <ul class="navbar-nav ms-auto me-3">
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-user fa-fw"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">🌣 Settings</a></li>
-                <li><a class="dropdown-item" href="#">Activity Log</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="dropdown-item">Logout ➜]</button>
-                    </form>
 
+            <a class="nav-link dropdown-toggle d-flex align-items-center" id="navbarDropdown" href="#" data-bs-toggle="dropdown">
+                
+
+                <span class="fw-semibold">{{ Auth::user()->name }}</span>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+
+                <!-- Profil -->
+                <li>
+                    <a class="dropdown-item" href="{{ route('admin.profile') }}">
+                        <i class="fas fa-user-cog me-2"></i> Profil Admin
+                    </a>
+                </li>
+
+                <li><hr class="dropdown-divider"></li>
+
+                <!-- Logout -->
+                <li>
+                    <form action="{{ route('admin.logout') }}" method="POST">
+                        @csrf
+                        <button class="dropdown-item text-danger" type="submit">
+                            <i class="fas fa-sign-out-alt me-2"></i> Logout
+                        </button>
+                    </form>
                 </li>
             </ul>
         </li>
     </ul>
 </nav>
-

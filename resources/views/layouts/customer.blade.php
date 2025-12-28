@@ -5,15 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Customer</title>
 
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         body {
-            background-color: #fdfafa;
             font-family: 'Poppins', sans-serif;
+            background: transparent;
         }
 
+        /* 🌸 BACKGROUND ANIMASI */
+        .sakura {
+        position: absolute;
+        top: -20px;
+        width: 16px;
+        height: 16px;
+        background: #ff8fa3;
+        transform: rotate(45deg);
+        opacity: 0.8;
+        animation: fall linear infinite;
+    }
+
+    .sakura::before,
+    .sakura::after {
+        content: '';
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background: #ff8fa3;
+        border-radius: 50%;
+    }
+
+    .sakura::before {
+        top: -8px;
+        left: 0;
+    }
+
+    .sakura::after {
+        left: -8px;
+        top: 0;
+    }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) translateX(40px);
+                opacity: 0;
+            }
+        }
+
+        /* SIDEBAR */
         .sidebar {
             width: 230px;
             height: 100vh;
@@ -23,6 +69,7 @@
             top: 0;
             color: white;
             padding: 30px 20px;
+            z-index: 2;
         }
 
         .sidebar h4 {
@@ -47,9 +94,12 @@
             transform: translateX(4px);
         }
 
+        /* CONTENT */
         .content {
             margin-left: 250px;
             padding: 40px;
+            position: relative;
+            z-index: 1;
         }
 
         .btn-logout {
@@ -66,10 +116,25 @@
 </head>
 <body>
 
+    <!-- 🌸 BACKGROUND SAKURA -->
+    <div class="sakura-bg">
+        @for ($i = 1; $i <= 30; $i++)
+            <span class="sakura"
+                style="
+                    left: {{ rand(0, 100) }}%;
+                    animation-duration: {{ rand(12, 25) }}s;
+                    animation-delay: {{ rand(0, 10) }}s;
+                ">
+            </span>
+        @endfor
+    </div>
+
+    <!-- SIDEBAR -->
     <div class="sidebar">
         <h4>CUSTOMER</h4>
 
         <a href="{{ route('customer.dashboard') }}">📦 Barang Saya</a>
+        <a href="{{ route('customer.profile') }}">👤 Profil</a>
 
         <form action="{{ route('customer.logout') }}" method="POST">
             @csrf
@@ -77,6 +142,7 @@
         </form>
     </div>
 
+    <!-- CONTENT -->
     <div class="content">
         @yield('content')
     </div>

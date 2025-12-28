@@ -59,4 +59,38 @@ class CustomerAuthController extends Controller
     {
         return view('customer.dashboard'); // pastikan ada file dashboard.blade.php
     }
+
+    public function editProfile()
+{
+    $user = auth()->user(); // Ambil data customer login
+    return view('customer.profile.edit', compact('user'));
+}
+
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user();
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'photo' => 'nullable|image|mimes:jpg,png,jpeg|max:2048'
+        ]);
+
+        // Update nama
+        $user->name = $request->name;
+        $user->phone = $request->phone;
+
+        // Upload foto jika ada
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $filename = time().'_'.$file->getClientOriginalName();
+            $file->move(public_path('uploads/profile'), $filename);
+
+            $user->photo = $filename;
+        }
+
+        $user->save();
+
+        return redirect()->back()->with('success', 'Profil berhasil diperbarui!');
+    }
 }

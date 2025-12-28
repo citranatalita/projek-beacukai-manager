@@ -2,28 +2,25 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\NegaraAsalController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\CustomerAuthController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 
-// ====================
-// HOME
-// ====================
 Route::get('/', function () {
     return view('home');
 });
 
 // ====================
-// ADMIN SECTION
+// ADMIN LOGIN
 // ====================
-
-// Halaman Login Admin
 Route::get('/admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
 
-// Logout Admin
 Route::post('/admin/logout', function () {
     Auth::logout();
     request()->session()->invalidate();
@@ -31,26 +28,40 @@ Route::post('/admin/logout', function () {
     return redirect('/admin/login')->with('success', 'Logout berhasil.');
 })->name('admin.logout');
 
-// Grup Rute Admin dengan Prefix 'admin' dan Middleware
+// ====================
+// ADMIN AREA
+// ====================
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
-    // Barang Routes
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])
+        ->name('admin.dashboard');
+
+    // BARANG ADMIN
     Route::resource('barang', BarangController::class);
 
-    // Update status barang (Completed / Pending)
-    Route::post('/barang/{id}/completed', [BarangController::class, 'markAsCompleted'])->name('barang.markAsCompleted');
-    Route::post('/barang/{id}/pending', [BarangController::class, 'markAsPending'])->name('barang.markAsPending');
+    Route::post('/barang/{id}/completed', [BarangController::class, 'markAsCompleted'])
+        ->name('barang.markAsCompleted');
 
-    // Negara Asal Routes
+    Route::post('/barang/{id}/pending', [BarangController::class, 'markAsPending'])
+        ->name('barang.markAsPending');
+
+    // NEGARA ASAL
     Route::resource('negara', NegaraAsalController::class);
-});
 
+    // PROFIL ADMIN
+    Route::get('/profile', [AdminProfileController::class, 'profile'])
+        ->name('admin.profile');
+
+    Route::get('/profile/edit', [AdminProfileController::class, 'edit'])
+        ->name('admin.profile.edit');
+
+    Route::post('/profile/update', [AdminProfileController::class, 'update'])
+        ->name('admin.profile.update');
+});
 
 // ====================
 // CUSTOMER SECTION
 // ====================
-
-// Autentikasi Customer
 Route::prefix('customer')->group(function () {
 
     // REGISTER
@@ -61,25 +72,32 @@ Route::prefix('customer')->group(function () {
     Route::get('/login', [CustomerAuthController::class, 'showLoginForm'])->name('customer.login.form');
     Route::post('/login', [CustomerAuthController::class, 'login'])->name('customer.login.submit');
 
-    // ==========================
-    // Dashboard & Barang Customer
-    // ==========================
+    // ========================
+    // CUSTOMER AUTH
+    // ========================
     Route::middleware(['auth:customer'])->group(function () {
-        // Dashboard
-        Route::get('/dashboard', [CustomerController::class, 'dashboard'])->name('customer.dashboard');
 
-        // Form tambah barang
+        Route::get('/dashboard', [CustomerController::class, 'dashboard'])
+            ->name('customer.dashboard');
+
+        // CUSTOMER TAMBAH BARANG
         Route::get('/barang_customer/create', [CustomerController::class, 'create'])
-        ->name('customer.barang_customer.create');
+            ->name('customer.barang_customer.create');
 
-
-        // Simpan barang
         Route::post('/barang_customer', [CustomerController::class, 'store'])
-        ->name('customer.barang_customer.store');
-        // Logout
-        Route::post('/logout', [CustomerController::class, 'logout'])->name('customer.logout');
+            ->name('customer.barang_customer.store');
+
+        // CETAK BARANG CUSTOMER
+        Route::get('/barang/{id}/print', [CustomerController::class, 'printBarang'])
+            ->name('customer.barang.print');
+
+        // PROFILE CUSTOMER
+        Route::get('/profile', [CustomerController::class, 'profile'])->name('customer.profile');
+        Route::get('/profile/edit', [CustomerController::class, 'editProfile'])->name('customer.profile.edit');
+        Route::post('/profile/update', [CustomerController::class, 'updateProfile'])->name('customer.profile.update');
+
+        // LOGOUT
+        Route::post('/logout', [CustomerController::class, 'logout'])
+            ->name('customer.logout');
     });
 });
-
-
-

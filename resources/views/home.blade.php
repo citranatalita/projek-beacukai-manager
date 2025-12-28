@@ -84,11 +84,11 @@
 <body>
     <div class="container">
         <!-- Gambar -->
-        <img src="https://i.pinimg.com/736x/7c/c1/5e/7cc15eb9251f08761c99545aa0276f67.jpg" alt="Welcome Image">
+        <img src="https://tse2.mm.bing.net/th/id/OIP.MJC4AtdmRtnicQk-1TyEHAHaFg?rs=1&pid=ImgDetMain&o=7&rm=3.png" alt="Welcome Image">
         
         <!-- Teks -->
         <h1>Hy, Welcome!</h1>
-        <p>Welcome to the Beacukai Manager </p>
+        <p>Welcome to the Beacukai Manager Citra</p>
         
         <!-- Button -->
        <a href="{{ route('admin.login') }}" class="button">Get Started</a>

@@ -11,6 +11,10 @@
                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                 🌐 Negara
             </a>
+            <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>
+                📊 Dashboard
+            </a>
             </div>
         </div>
 

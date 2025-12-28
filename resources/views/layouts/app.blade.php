@@ -43,11 +43,6 @@
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
                         <div class="text-muted">© 2025 Beacukai Manager 🚢</div>
-                        <div>
-                        <a href="#">🔒 Privasi</a>
-                        &middot;
-                        <a href="#">📄 Syarat & Ketentuan</a>
-                        </div>
 
                     </div>
                 </div>

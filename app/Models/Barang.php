@@ -23,10 +23,11 @@ class Barang extends Model
 
 
     // Relasi dengan model NegaraAsal
-    public function negaraAsal()
+        public function negaraAsal()
     {
         return $this->belongsTo(NegaraAsal::class, 'id_negara_asal');
     }
+
 
     public function user()
     {
