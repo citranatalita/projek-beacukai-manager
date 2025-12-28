@@ -14,7 +14,7 @@
     <!-- AlpineJS -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    <!-- 🤍 BACKGROUND LOVE GOLD -->
+    <!-- BACKGROUND LOVE GOLD -->
     <style>
     body {
         background: #c4d5e6ff; /* abu muda */

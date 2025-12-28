@@ -13,7 +13,7 @@
             background: transparent;
         }
 
-        /* 🌸 BACKGROUND ANIMASI */
+        /* BACKGROUND ANIMASI */
         .sakura {
         position: absolute;
         top: -20px;
@@ -116,7 +116,7 @@
 </head>
 <body>
 
-    <!-- 🌸 BACKGROUND SAKURA -->
+    <!-- BACKGROUND SAKURA -->
     <div class="sakura-bg">
         @for ($i = 1; $i <= 30; $i++)
             <span class="sakura"
